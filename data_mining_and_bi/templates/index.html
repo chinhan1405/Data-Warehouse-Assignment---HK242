@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📊 Báo cáo Data Warehouse</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            max-width: 600px;
+            margin: auto;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 Danh sách báo cáo</h1>
+    <ul>
+        {% for report in reports %}
+        <li><a href="{{ url_for('report', filename=report) }}" target="_blank">{{ report }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
