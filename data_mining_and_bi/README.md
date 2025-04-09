@@ -1,57 +1,61 @@
 # Overview
-This project focuses on data mining and business intelligence (BI) for a bike sales data warehouse. It includes scripts to extract data from a SQLite database (bike_dw.db), generate data profiling reports using ydata-profiling, and visualize these reports through a Flask web application. The reports provide insights into the data warehouse tables, such as customer, date, product, staff, store, and sales data.
+This project focuses on data mining and business intelligence (BI) for a bike sales data warehouse. It includes scripts to extract data from a SQLite database (`bike_dw.db`), generate data profiling reports using `ydata-profiling`, and visualize these reports through a Flask web application. Additionally, the project implements a machine learning pipeline to predict sales quantities using a PyTorch neural network, with a web interface for inference.
 
-# Project Structure
-
-
-data_mining_and_bi/
-│
-├── reports/                     # Folder containing generated HTML report files
-│   ├── Dim_Customer_report.html
-│   ├── Dim_Date_report.html
-│   ├── Dim_Product_report.html
-│   ├── Dim_Staff_report.html
-│   ├── Dim_Store_report.html
-│   └── Fact_Sales_report.html
-│
-├── templates/                   # Folder for Flask templates
-│   └── index.html               # Template for the main page
-│
-├── app.py                       # Flask app to serve the reports
-├── bi.py                        # Script to generate data profiling reports
-└── README.md                    # Project documentation
+The reports provide insights into the data warehouse tables, such as customer, date, product, staff, store, and sales data. The machine learning component allows users to predict sales quantities based on input features like year, month, product, store, and more.
 
 # Features
-Data Profiling: Generate detailed HTML reports for each table in the data warehouse using ydata-profiling.
-Web Visualization: A Flask-based web application to view the generated reports interactively.
-Data Source: SQLite database (bike_dw.db) containing the bike sales data warehouse.
+- **Data Profiling**: Generate detailed HTML reports for each table in the data warehouse using `ydata-profiling`.
+- **Web Visualization**: A Flask-based web application to view the generated reports interactively.
+- **Sales Prediction**: Train a neural network model using PyTorch to predict sales quantities, with a web interface for inference.
+- **Data Source**: SQLite database (`bike_dw.db`) containing the bike sales data warehouse.
 
-# Required Python packages (install via pip):
 
-** pip install flask pandas ydata-profiling **
-Additionally, ensure the SQLite database (bike_dw.db) is located in the ../data_warehouse/ directory relative to the project folder.
+# Required Python Packages
+Install the required packages via `pip`:
+
+pip install flask pandas ydata-profiling torch sklearn numpy joblib
 
 # Setup and Usage
+## Step 1: Generate Data Profiling Reports
 
-## Step1: Run the bi.py script to generate HTML reports for each table in the data warehouse. This script connects to the bike_dw.db database, extracts data from each table, and uses ydata-profiling to create profiling reports.
+Run the bi.py script to generate HTML reports for each table in the data warehouse. This script connects to the bike_dw.db database, extracts data from each table, and uses ydata-profiling to create profiling reports.
 
-** python bi.py **
+python bi.py
 
 After running the script, HTML reports will be generated in the reports/ folder, such as:
--Dim_Customer_report.html
--Dim_Date_report.html
--Dim_Product_report.html
--Dim_Staff_report.html
--Dim_Store_report.html
--Fact_Sales_report.html
 
-## Step 2: Run the Flask Web Application
-Run the app.py script to start the Flask web server, which allows you to visualize the reports in your browser.
+Dim_Customer_report.html
 
-** python app.py **
+Dim_Date_report.html
+
+Dim_Product_report.html
+
+Dim_Staff_report.html
+
+Dim_Store_report.html
+
+Fact_Sales_report.html
+
+## Step 2: Train the Sales Prediction Model
+Run the train.py script to train a neural network model using PyTorch. This script extracts data from bike_dw.db, trains the model on sales data, and saves the trained model and scaler to the checkpoint/ folder.
+
+python train.py
+
+After running, the following files will be generated:
+
+checkpoint/sales_predictor.pth: The trained PyTorch model.
+
+checkpoint/scaler.pkl: The scaler used for data preprocessing.
+
+## Step 3: Run the Flask Web Application
+Run the app.py script to start the Flask web server, which allows you to visualize the reports and perform sales predictions through a web interface.
+
+python app.py
 
 The Flask app will start on http://localhost:8080. Open this URL in your browser to access the web interface.
 
-## Step 3: Visualize Reports
-The main page (index.html) will display a dropdown menu listing all available reports.
-Select a report from the dropdown to view its detailed data profiling, including statistics, correlations, and visualizations generated by ydata-profiling.
+## Step 4: Visualize Reports and Predict Sales
+
+View Reports: The main page (index.html) displays a list of all available reports. Click on a report link to view its detailed data profiling, including statistics, correlations, and visualizations generated by ydata-profiling.
+
+Predict Sales: Below the report list, there is a form where you can input values (e.g., year, month, product key, etc.) to predict sales quantities using the trained model. Submit the form to see the predicted sales quantity.
