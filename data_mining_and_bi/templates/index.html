@@ -34,6 +34,49 @@
         a:hover {
             color: #0056b3;
         }
+        /* CSS cho form dự đoán */
+        .prediction-section {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+        .prediction-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -43,5 +86,47 @@
         <li><a href="{{ url_for('report', filename=report) }}" target="_blank">{{ report }}</a></li>
         {% endfor %}
     </ul>
+
+    <!-- Thêm phần dự đoán doanh số -->
+    <div class="prediction-section">
+        <h2>Dự đoán Doanh số Bán hàng</h2>
+        <form method="POST">
+            <label for="year">Năm:</label>
+            <input type="number" id="year" name="year" step="1" required>
+
+            <label for="month">Tháng:</label>
+            <input type="number" id="month" name="month" min="1" max="12" step="1" required>
+
+            <label for="quarter">Quý:</label>
+            <input type="number" id="quarter" name="quarter" min="1" max="4" step="1" required>
+
+            <label for="product_key">Mã sản phẩm:</label>
+            <input type="number" id="product_key" name="product_key" step="1" required>
+
+            <label for="store_key">Mã cửa hàng:</label>
+            <input type="number" id="store_key" name="store_key" step="1" required>
+
+            <label for="product_price">Giá sản phẩm:</label>
+            <input type="number" id="product_price" name="product_price" step="0.01" required>
+
+            <label for="discount">Giảm giá (0-1):</label>
+            <input type="number" id="discount" name="discount" min="0" max="1" step="0.01" required>
+
+            <label for="revenue">Doanh thu:</label>
+            <input type="number" id="revenue" name="revenue" step="0.01" required>
+
+            <button type="submit">Dự đoán</button>
+        </form>
+
+        {% if prediction is not none %}
+        <div class="result">
+            {% if prediction is string %}
+                {{ prediction }}
+            {% else %}
+                Số lượng dự đoán: {{ prediction }}
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
